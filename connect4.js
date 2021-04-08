@@ -7,18 +7,33 @@
  * board fills (tie)
  */
 
-var WIDTH = 7;
-var HEIGHT = 6;
+const WIDTH = 7;
+const HEIGHT = 6;
 
-var currPlayer = 1; // active player: 1 or 2
-var board = []; // array of rows, each row is array of cells  (board[y][x])
+let currPlayer = 1; // active player: 1 or 2
+let board = []; // array of rows, each row is array of cells  (board[y][x])
 
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
  */
-
 function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
+
+  //loop through width
+    //for each width point, create subarray looping out to height
+      //push null to each element of each subarray
+      //push each column to parent board array
+
+  for(let i = 0;i<HEIGHT;i++){
+    let column = [];
+    for(let k = 0;k<WIDTH;k++){
+      column.push(null);
+    }
+    board.push(column);
+  }
+
+  console.log(board);
+  //return board;
+  
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -26,26 +41,30 @@ function makeBoard() {
 function makeHtmlBoard() {
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
 
-  // TODO: add comment for this code
-  var top = document.createElement("tr");
-  top.setAttribute("id", "column-top");
-  top.addEventListener("click", handleClick);
+  // creates variable for the top row of the table which holds clicker functionality to select a column to drop your piece
+  var selectorRow = document.createElement("tr");
+  selectorRow.setAttribute("id", "column-top");
+  selectorRow.addEventListener("click", handleClick);
+  board_table.appendChild(selectorRow);
 
   // TODO: add comment for this code
   for (var x = 0; x < WIDTH; x++) {
     var headCell = document.createElement("td");
     headCell.setAttribute("id", x);
-    top.append(headCell);
+    selectorRow.append(headCell);
   }
-  htmlBoard.append(top);
+
+  //htmlBoard.append(top); this is a mystery
 
   // dynamically creates the main part of html board
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
-  for (var y = 0; y < HEIGHT; y++) {
+  for (let y = 0; y < HEIGHT; y++) {
     // TODO: Create a table row element and assign to a "row" variable
+    let tableRow = document.createElement("tr");
+    tableRow.setAttribute("id", y);
 
-    for (var x = 0; x < WIDTH; x++) {
+    for (let x = 0; x < WIDTH; x++) {
       // TODO: Create a table cell element and assign to a "cell" variable
 
       // TODO: add an id, y-x, to the above table cell element
@@ -53,9 +72,12 @@ function makeHtmlBoard() {
 
       // TODO: append the table cell to the table row
 
+      let tableCell = document.createElement("td");
+      tableCell.setAttribute("id", y-x);
+      tableRow.appendChild(tableCell);
     }
     // TODO: append the row to the html board
-
+    board_table.appendChild(tableRow);
   }
 }
 
