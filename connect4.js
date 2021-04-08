@@ -32,52 +32,39 @@ function makeBoard() {
   }
 
   console.log(board);
-  //return board;
   
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
-
 function makeHtmlBoard() {
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
-
+  const htmlBoard = document.getElementById("board");
   // creates variable for the top row of the table which holds clicker functionality to select a column to drop your piece
   var selectorRow = document.createElement("tr");
   selectorRow.setAttribute("id", "column-top");
   selectorRow.addEventListener("click", handleClick);
-  board_table.appendChild(selectorRow);
+  htmlBoard.appendChild(selectorRow);
 
-  // TODO: add comment for this code
+  // creates table cell elements for the first selector row of the table as defined above
   for (var x = 0; x < WIDTH; x++) {
     var headCell = document.createElement("td");
     headCell.setAttribute("id", x);
     selectorRow.append(headCell);
   }
 
-  //htmlBoard.append(top); this is a mystery
-
   // dynamically creates the main part of html board
   // uses HEIGHT to create table rows
   // uses WIDTH to create table cells for each row
   for (let y = 0; y < HEIGHT; y++) {
-    // TODO: Create a table row element and assign to a "row" variable
     let tableRow = document.createElement("tr");
     tableRow.setAttribute("id", y);
 
     for (let x = 0; x < WIDTH; x++) {
-      // TODO: Create a table cell element and assign to a "cell" variable
-
-      // TODO: add an id, y-x, to the above table cell element
-      // you'll use this later, so make sure you use y-x
-
-      // TODO: append the table cell to the table row
-
       let tableCell = document.createElement("td");
-      tableCell.setAttribute("id", y-x);
+      tableCell.setAttribute("id", `${y}-${x}`);
       tableRow.appendChild(tableCell);
     }
-    // TODO: append the row to the html board
-    board_table.appendChild(tableRow);
+    htmlBoard.appendChild(tableRow);
   }
 }
 
