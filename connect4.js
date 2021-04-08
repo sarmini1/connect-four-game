@@ -19,20 +19,20 @@ let board = []; // array of rows, each row is array of cells  (board[y][x])
 function makeBoard() {
 
   //loop through width
-    //for each width point, create subarray looping out to height
-      //push null to each element of each subarray
-      //push each column to parent board array
+  //for each width point, create subarray looping out to height
+  //push null to each element of each subarray
+  //push each column to parent board array
 
-  for(let i = 0;i<HEIGHT;i++){
+  for (let i = 0; i < HEIGHT; i++) {
     let column = [];
-    for(let k = 0;k<WIDTH;k++){
+    for (let k = 0; k < WIDTH; k++) {
       column.push(null);
     }
     board.push(column);
   }
 
   console.log(board);
-  
+
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -57,7 +57,7 @@ function makeHtmlBoard() {
   // uses WIDTH to create table cells for each row
   for (let y = 0; y < HEIGHT; y++) {
     let tableRow = document.createElement("tr");
-    tableRow.setAttribute("id", y);
+
 
     for (let x = 0; x < WIDTH; x++) {
       let tableCell = document.createElement("td");
@@ -72,13 +72,26 @@ function makeHtmlBoard() {
 
 function findSpotForCol(x) {
   // TODO: write the real version of this, rather than always returning 0
+
+
   return 0;
 }
 
 /** placeInTable: update DOM to place piece into HTML table of board */
 
+// place in table func()
+// make a new piece div element. assign class to .piece,
+// x = column y = row
+
+
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
+  let piece = document.createElement("div");
+  piece.style.backgroundColor = "blue"
+  piece.classList.add("piece", "player-one");
+
+  let placementSpot = document.getElementById(`${y}-${x}`);
+  placementSpot.append(piece);
 }
 
 /** endGame: announce game end */
@@ -90,16 +103,21 @@ function endGame(msg) {
 /** handleClick: handle click of column top to play piece */
 
 function handleClick(evt) {
+
+
   // get x from ID of clicked cell
-  var x = +evt.target.id;
+  let x = +evt.target.id;
 
   // get next spot in column (if none, ignore click)
-  var y = findSpotForCol(x);
+  let y = findSpotForCol(x);
   if (y === null) {
     return;
   }
 
   // place piece in board and add to HTML table
+  board[y][x] = currPlayer;
+  console.log(board[y])
+  console.log(currPlayer)
   // TODO: add line to update in-memory board
   placeInTable(y, x);
 
@@ -110,9 +128,14 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
-
+  let isFull = board.every(function (arr) { !arr.includes(null) })
+  if (isFull === true) {
+    endGame()
+  }
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  // id player === 1, set player === 2, vice verse 
+  currPlayer = (currPlayer === 1) ?  2 : 1;
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -153,6 +176,8 @@ function checkForWin() {
     }
   }
 }
+
+// function gameOVer
 
 makeBoard();
 makeHtmlBoard();
