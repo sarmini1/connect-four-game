@@ -87,8 +87,14 @@ function findSpotForCol(x) {
 function placeInTable(y, x) {
   // TODO: make a div and insert into correct table cell
   let piece = document.createElement("div");
-  piece.style.backgroundColor = "blue"
-  piece.classList.add("piece", "player-one");
+  if (currPlayer === 1){
+    piece.style.backgroundColor = "blue";
+    piece.classList.add("piece", "p1");
+  } else {
+    piece.style.backgroundColor = "red";
+    piece.classList.add("piece", "p2");
+  }
+  
 
   let placementSpot = document.getElementById(`${y}-${x}`);
   placementSpot.append(piece);
